@@ -1,78 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
     <title>Document</title>
-</head>
-<body>
+  </head>
+  <body>
     <div class="wrapper">
-        <div class="chat">
-            <div class="chat__interface">
-                <div class="chat__nav">
-                    <a href="#popup" class="chat__settings light-button">Настройки</a>
-                    <button class="chat__exit light-button">Выйти</button>
-                </div>
-                <div class="chat__window">
-
-                </div>
-                <div class="chat__messages">
-                    <form class="chat__form">
-                        <input type="text" class="chat__input" placeholder="сообщение..">
-                        <input type="submit" class="chat__send light-button" value="->">
-                    </form>
-                </div>
-            </div>
+      <div class="chat">
+        <div class="chat__interface">
+          <div class="chat__nav">
+            <a href="#popup" class="chat__settings light-button">Настройки</a>
+            <button class="chat__exit light-button">Выйти</button>
+          </div>
+          <div class="chat__window"></div>
+          <div class="chat__messages">
+            <form class="chat__form">
+              <input
+                type="text"
+                class="chat__input"
+                placeholder="сообщение.."
+              />
+              <input type="submit" class="chat__send light-button" value="->" />
+            </form>
+          </div>
         </div>
+      </div>
     </div>
 
     <div id="popup" class="popup active">
-        <a href="#" class="popup__area popup__close"></a>
-        <div class="popup__body">
-            <div class="popup__content">
-                <div class="popup__nav">
-                    <div class="popup__title">Авторизация</div>
-                    <a href="#" class="popup__close">+</a>
-                </div>
-                <div class="popup__colum">
-                    <div class="authorization active">
-                        <div class="subttitle">Почта:</div>
-                        <form class="popup__form authorization-form">
-                            <input class="popup__input authorization-input" type="text">
-                            <button class="send-mail light-button">Получить код</button>
-                        </form>
-                    </div>
-                    <div class="verification">
-                        <div class="subttitle">Код:</div>
-                        <form class="popup__form verification-form">
-                            <input class="popup__input verification-input" type="text">
-                            <button class="send-code light-button">Войти</button>
-                        </form>
-                    </div>
-                    <div class="settings">
-                        <div class="subttitle">Имя в чате:</div>
-                        <form class="popup__form name-form">
-                            <input class="popup__input name-input" type="text" placeholder="Your name">
-                            <button class="send-name light-button">-></button>
-                        </form>
-                    </div>
-                </div>
+      <a href="#" class="popup__area popup__close"></a>
+      <div class="popup__body">
+        <div class="popup__content">
+          <div class="popup__nav">
+            <div class="popup__title">Авторизация</div>
+            <a href="#" class="popup__close">+</a>
+          </div>
+          <div class="popup__colum">
+            <div class="authorization active">
+              <div class="subttitle">Почта:</div>
+              <form class="popup__form authorization-form">
+                <input class="popup__input authorization-input" type="text" />
+                <button class="send-mail light-button">Получить код</button>
+              </form>
             </div>
+            <div class="verification">
+              <div class="subttitle">Код:</div>
+              <form class="popup__form verification-form">
+                <input class="popup__input verification-input" type="text" />
+                <button class="send-code light-button">Войти</button>
+              </form>
+            </div>
+            <div class="settings">
+              <div class="subttitle">Имя в чате:</div>
+              <form class="popup__form name-form">
+                <input
+                  class="popup__input name-input"
+                  type="text"
+                  placeholder="Your name"
+                />
+                <button class="send-name light-button">-></button>
+              </form>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
     <template id="tmp__message">
-            <p class="text"></p>
-            <div class="message__time">
-                18:45
-            </div>
+      <p class="text"></p>
+      <div class="message__time">18:45</div>
     </template>
-    <script type="module" src="src/api.js"></script>
-    <script type="module" src="src/verification.js"></script>
-    <script type="module" src="src/authorization.js"></script>
-    <script type="module" src="src/popup.js"></script>
-    <script type="module" src="src/settings.js"></script>
-    <script type="module" src="src/index.js"></script>
-</body>
+    <script type="module" src="root/api.ts"></script>
+    <script type="module" src="root/verification.ts"></script>
+    <script type="module" src="root/authorization.ts"></script>
+    <script type="module" src="root/popup.ts"></script>
+    <script type="module" src="root/settings.ts"></script>
+    <script type="module" src="root/index.ts"></script>
+  </body>
 </html>
