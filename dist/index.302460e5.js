@@ -142,13 +142,13 @@
       this[globalName] = mainExports;
     }
   }
-})({"jC2qd":[function(require,module,exports) {
+})({"2vNbF":[function(require,module,exports) {
 var global = arguments[3];
 var HMR_HOST = null;
 var HMR_PORT = null;
 var HMR_SECURE = false;
 var HMR_ENV_HASH = "d6ea1d42532a7575";
-module.bundle.HMR_BUNDLE_ID = "890e741a975ef6c8";
+module.bundle.HMR_BUNDLE_ID = "09bc9f69302460e5";
 "use strict";
 /* global HMR_HOST, HMR_PORT, HMR_ENV_HASH, HMR_SECURE, chrome, browser, globalThis, __parcel__import__, __parcel__importScripts__, ServiceWorkerGlobalScope */ /*::
 import type {
@@ -556,117 +556,76 @@ function hmrAccept(bundle, id) {
     });
 }
 
-},{}],"8lqZg":[function(require,module,exports) {
-"use strict";
-var __awaiter = this && this.__awaiter || function(thisArg, _arguments, P, generator) {
-    function adopt(value) {
-        return value instanceof P ? value : new P(function(resolve) {
-            resolve(value);
-        });
-    }
-    return new (P || (P = Promise))(function(resolve, reject) {
-        function fulfilled(value) {
-            try {
-                step(generator.next(value));
-            } catch (e) {
-                reject(e);
-            }
-        }
-        function rejected(value) {
-            try {
-                step(generator["throw"](value));
-            } catch (e) {
-                reject(e);
-            }
-        }
-        function step(result) {
-            result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
-        }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-var __importDefault = this && this.__importDefault || function(mod) {
-    return mod && mod.__esModule ? mod : {
-        "default": mod
-    };
-};
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-const authorization_js_1 = require("59087d7f15d3e79e");
-const UI_js_1 = require("6e26477c404e8f6b");
-const api_js_1 = require("8d58491e027fc0b0");
-const js_cookie_1 = __importDefault(require("77d254f8ef203d2a"));
-let breack = true;
-document.addEventListener("DOMContentLoaded", ()=>__awaiter(void 0, void 0, void 0, function*() {
-        (yield (0, authorization_js_1.isAuth)()) ? (0, authorization_js_1.skipAuth)() : (0, authorization_js_1.authorization)();
-        getMessages();
-        loadHistory();
-    }));
-const templateMessage = document.querySelector("#tmp__message");
-const socket = new WebSocket(`wss://edu.strada.one/websockets?${js_cookie_1.default.get("token")}`);
-let lastMessegeIndex = 0;
-UI_js_1.CHAT_UI.WINDOW.addEventListener("scroll", virtualize);
-function virtualize() {
-    let cordWindow = this.scrollHeight + this.scrollTop - this.clientHeight;
-    let scrollHeightLast = this.scrollHeight;
-    if (cordWindow < 40 && breack) {
-        loadHistory();
-        this.addEventListener("scroll", virtualize);
-        breack = !breack;
-        UI_js_1.CHAT_UI.WINDOW.scrollTop = UI_js_1.CHAT_UI.WINDOW.scrollTop + this.scrollHeight - scrollHeightLast;
-        setTimeout(()=>{
-            breack = !breack;
-        }, 1000);
-    }
-}
-function getMessages() {
-    return __awaiter(this, void 0, void 0, function*() {
-        const response = yield (0, api_js_1.apiGET)("https://edu.strada.one/api/messages/");
-        const messages = yield response.json();
-        localStorage.setItem("historyMesseges", JSON.stringify(messages.messages));
+},{}],"97Ddq":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "verification", ()=>verification);
+parcelHelpers.export(exports, "saveMyName", ()=>saveMyName);
+var _jsCookie = require("js-cookie");
+var _jsCookieDefault = parcelHelpers.interopDefault(_jsCookie);
+var _ui = require("./UI");
+var _api = require("./api");
+function verification() {
+    (0, _ui.POPUP_UI).TITLE.textContent = "Подтверждение";
+    (0, _ui.VERIFICATION_UI).WINDOW.classList.add("active");
+    (0, _ui.VERIFICATION_UI).FORM.addEventListener("submit", (event)=>{
+        event.preventDefault();
+        saveToken((0, _ui.VERIFICATION_UI).INPUT.value);
+        nextStep();
     });
 }
-function loadHistory() {
-    const messages = JSON.parse(localStorage.getItem("historyMesseges"));
-    const messagesPiece = messages.slice(lastMessegeIndex, lastMessegeIndex + 20);
-    UI_js_1.CHAT_UI.WINDOW.append(...messagesPiece.map((message)=>{
-        return createMessage(message);
-    }));
-    lastMessegeIndex += 20;
+async function saveMyName() {
+    const response = await (0, _api.apiGET)("https://edu.strada.one/api/user/me");
+    const result = await response.json();
+    sessionStorage.setItem("myEmail", result.email);
 }
-function createMessage(message) {
-    const template = templateMessage.content.cloneNode(true);
-    const bodyMessage = document.createElement("div");
-    const textMessage = template.querySelector("p");
-    const userName = message.user.name;
-    const isMine = isMyMessage(message.user.email) ? "my-message" : "other-message";
-    const classes = `chat__message`;
-    bodyMessage.classList.add(classes);
-    bodyMessage.classList.add(isMine);
-    textMessage.textContent = `${userName}: ${message.text}`;
-    bodyMessage.append(template);
-    return bodyMessage;
+function saveToken(token) {
+    (0, _jsCookieDefault.default).set("token", token, {
+        expires: 1
+    });
 }
-function sendMessage(textMessage) {
-    socket.send(JSON.stringify({
-        text: textMessage
-    }));
+function nextStep() {
+    (0, _ui.VERIFICATION_UI).WINDOW.classList.remove("active");
+    (0, _ui.CHAT_UI).CHAT.classList.add("active");
+    (0, _ui.POPUP_UI).POPUP.classList.remove("active");
 }
-function isMyMessage(email) {
-    const myUserName = sessionStorage.getItem("myEmail");
-    return myUserName === email;
-}
-UI_js_1.CHAT_UI.FORM.addEventListener("submit", (event)=>{
-    event.preventDefault();
-    const textMessage = UI_js_1.CHAT_UI.INPUT.value;
-    UI_js_1.CHAT_UI.INPUT.value = "";
-    sendMessage(textMessage);
-});
-socket.onmessage = (event)=>{
-    UI_js_1.CHAT_UI.WINDOW.prepend(createMessage(JSON.parse(event.data)));
+
+},{"js-cookie":"c8bBu","./UI":"ayJ6R","./api":"47TSd","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"ayJ6R":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "CHAT_UI", ()=>CHAT_UI);
+parcelHelpers.export(exports, "POPUP_UI", ()=>POPUP_UI);
+parcelHelpers.export(exports, "AUTHORIZATION_UI", ()=>AUTHORIZATION_UI);
+parcelHelpers.export(exports, "VERIFICATION_UI", ()=>VERIFICATION_UI);
+parcelHelpers.export(exports, "SETTINGS_UI", ()=>SETTINGS_UI);
+const CHAT_UI = {
+    CHAT: document.querySelector(".chat"),
+    FORM: document.querySelector(".chat__form"),
+    WINDOW: document.querySelector(".chat__window"),
+    INPUT: document.querySelector(".chat__input")
+};
+const POPUP_UI = {
+    POPUP: document.querySelector(".popup"),
+    TITLE: document.querySelector(".popup__title"),
+    CLOSE_BUTTONS: document.querySelectorAll(".popup__close")
+};
+const AUTHORIZATION_UI = {
+    FORM: document.querySelector(".authorization-form"),
+    INPUT: document.querySelector(".authorization-input"),
+    WINDOW: document.querySelector(".authorization")
+};
+const VERIFICATION_UI = {
+    FORM: document.querySelector(".verification-form"),
+    INPUT: document.querySelector(".verification-input"),
+    WINDOW: document.querySelector(".verification")
+};
+const SETTINGS_UI = {
+    WINDOW: document.querySelector(".settings"),
+    OPEN_BUTTON: document.querySelector(".chat__settings"),
+    NAME_FORM: document.querySelector(".name-form"),
+    NAME_INPUT: document.querySelector(".name-input")
 };
 
-},{"59087d7f15d3e79e":"etetI","6e26477c404e8f6b":"d3pWC","8d58491e027fc0b0":"8Zgej","77d254f8ef203d2a":"c8bBu"}]},["jC2qd","8lqZg"], "8lqZg", "parcelRequire25d8")
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["2vNbF","97Ddq"], "97Ddq", "parcelRequire25d8")
 
-//# sourceMappingURL=index.975ef6c8.js.map
+//# sourceMappingURL=index.302460e5.js.map

@@ -142,13 +142,13 @@
       this[globalName] = mainExports;
     }
   }
-})({"csEPd":[function(require,module,exports) {
+})({"gs5I8":[function(require,module,exports) {
 var global = arguments[3];
 var HMR_HOST = null;
 var HMR_PORT = null;
 var HMR_SECURE = false;
 var HMR_ENV_HASH = "d6ea1d42532a7575";
-module.bundle.HMR_BUNDLE_ID = "1473161443125882";
+module.bundle.HMR_BUNDLE_ID = "4e953959349fe894";
 "use strict";
 /* global HMR_HOST, HMR_PORT, HMR_ENV_HASH, HMR_SECURE, chrome, browser, globalThis, __parcel__import__, __parcel__importScripts__, ServiceWorkerGlobalScope */ /*::
 import type {
@@ -556,18 +556,14 @@ function hmrAccept(bundle, id) {
     });
 }
 
-},{}],"ejrGw":[function(require,module,exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-const UI_1 = require("1e574f7e3e74e196");
-UI_1.POPUP_UI.CLOSE_BUTTONS.forEach((Button)=>{
+},{}],"2WX3u":[function(require,module,exports) {
+var _ui = require("./UI");
+(0, _ui.POPUP_UI).CLOSE_BUTTONS.forEach((Button)=>{
     Button.addEventListener("click", ()=>{
-        UI_1.POPUP_UI.POPUP.classList.remove("active");
+        (0, _ui.POPUP_UI).POPUP.classList.remove("active");
     });
 });
 
-},{"1e574f7e3e74e196":"d3pWC"}]},["csEPd","ejrGw"], "ejrGw", "parcelRequire25d8")
+},{"./UI":"ayJ6R"}]},["gs5I8","2WX3u"], "2WX3u", "parcelRequire25d8")
 
-//# sourceMappingURL=index.43125882.js.map
+//# sourceMappingURL=index.349fe894.js.map

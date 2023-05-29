@@ -142,13 +142,13 @@
       this[globalName] = mainExports;
     }
   }
-})({"h2vo6":[function(require,module,exports) {
+})({"kdNKe":[function(require,module,exports) {
 var global = arguments[3];
 var HMR_HOST = null;
 var HMR_PORT = null;
 var HMR_SECURE = false;
 var HMR_ENV_HASH = "d6ea1d42532a7575";
-module.bundle.HMR_BUNDLE_ID = "a4f57efb9648bcd2";
+module.bundle.HMR_BUNDLE_ID = "53447783b7b051b8";
 "use strict";
 /* global HMR_HOST, HMR_PORT, HMR_ENV_HASH, HMR_SECURE, chrome, browser, globalThis, __parcel__import__, __parcel__importScripts__, ServiceWorkerGlobalScope */ /*::
 import type {
@@ -556,93 +556,59 @@ function hmrAccept(bundle, id) {
     });
 }
 
-},{}],"etetI":[function(require,module,exports) {
-"use strict";
-var __awaiter = this && this.__awaiter || function(thisArg, _arguments, P, generator) {
-    function adopt(value) {
-        return value instanceof P ? value : new P(function(resolve) {
-            resolve(value);
-        });
-    }
-    return new (P || (P = Promise))(function(resolve, reject) {
-        function fulfilled(value) {
-            try {
-                step(generator.next(value));
-            } catch (e) {
-                reject(e);
-            }
-        }
-        function rejected(value) {
-            try {
-                step(generator["throw"](value));
-            } catch (e) {
-                reject(e);
-            }
-        }
-        function step(result) {
-            result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
-        }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.skipAuth = exports.isAuth = exports.authorization = void 0;
-const verification_js_1 = require("273f018d404845ce");
-const api_js_1 = require("82f7ef8bf191b728");
-const UI_js_1 = require("adf1e4b556a77be6");
+},{}],"fLW57":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "authorization", ()=>authorization);
+parcelHelpers.export(exports, "isAuth", ()=>isAuth);
+parcelHelpers.export(exports, "skipAuth", ()=>skipAuth);
+var _verificationTs = require("./verification.ts");
+var _apiTs = require("./api.ts");
+var _uiTs = require("./UI.ts");
 function authorization() {
-    UI_js_1.POPUP_UI.TITLE.textContent = "Авторизация";
-    UI_js_1.AUTHORIZATION_UI.FORM.addEventListener("submit", (event)=>{
+    (0, _uiTs.POPUP_UI).TITLE.textContent = "Авторизация";
+    (0, _uiTs.AUTHORIZATION_UI).FORM.addEventListener("submit", (event)=>{
         event.preventDefault();
-        if (UI_js_1.AUTHORIZATION_UI.INPUT.value) {
-            sendMail(UI_js_1.AUTHORIZATION_UI.INPUT.value);
+        if ((0, _uiTs.AUTHORIZATION_UI).INPUT.value) {
+            sendMail((0, _uiTs.AUTHORIZATION_UI).INPUT.value);
             nextStep();
         }
     });
 }
-exports.authorization = authorization;
-function isAuth() {
-    return __awaiter(this, void 0, void 0, function*() {
-        try {
-            const response = yield (0, api_js_1.apiGET)("https://edu.strada.one/api/user/me");
-            if (response.status >= 200 && response.status < 300) {
-                const result = yield response.json();
-                sessionStorage.setItem("myEmail", result.email);
-                return true;
-            }
-            throw new Error();
-        } catch (_a) {
-            return false;
+async function isAuth() {
+    try {
+        const response = await (0, _apiTs.apiGET)("https://edu.strada.one/api/user/me");
+        if (response.status >= 200 && response.status < 300) {
+            const result = await response.json();
+            sessionStorage.setItem("myEmail", result.email);
+            return true;
         }
-    });
+        throw new Error();
+    } catch  {
+        return false;
+    }
 }
-exports.isAuth = isAuth;
 function skipAuth() {
-    UI_js_1.POPUP_UI.POPUP.classList.remove("active");
-    UI_js_1.CHAT_UI.CHAT.classList.add("active");
-    UI_js_1.AUTHORIZATION_UI.WINDOW.classList.remove("active");
+    (0, _uiTs.POPUP_UI).POPUP.classList.remove("active");
+    (0, _uiTs.CHAT_UI).CHAT.classList.add("active");
+    (0, _uiTs.AUTHORIZATION_UI).WINDOW.classList.remove("active");
 }
-exports.skipAuth = skipAuth;
-function sendMail(mail) {
-    return __awaiter(this, void 0, void 0, function*() {
-        yield fetch("https://edu.strada.one/api/user", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json;charset=utf-8"
-            },
-            body: JSON.stringify({
-                email: mail
-            })
-        });
+async function sendMail(mail) {
+    await fetch("https://edu.strada.one/api/user", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json;charset=utf-8"
+        },
+        body: JSON.stringify({
+            email: mail
+        })
     });
 }
 function nextStep() {
-    UI_js_1.AUTHORIZATION_UI.WINDOW.classList.remove("active");
-    (0, verification_js_1.verification)();
+    (0, _uiTs.AUTHORIZATION_UI).WINDOW.classList.remove("active");
+    (0, _verificationTs.verification)();
 }
 
-},{"273f018d404845ce":"esyqh","82f7ef8bf191b728":"8Zgej","adf1e4b556a77be6":"d3pWC"}]},["h2vo6","etetI"], "etetI", "parcelRequire25d8")
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./verification.ts":"97Ddq","./api.ts":"47TSd","./UI.ts":"ayJ6R"}]},["kdNKe","fLW57"], "fLW57", "parcelRequire25d8")
 
-//# sourceMappingURL=index.9648bcd2.js.map
+//# sourceMappingURL=index.b7b051b8.js.map

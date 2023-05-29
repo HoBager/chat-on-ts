@@ -142,13 +142,13 @@
       this[globalName] = mainExports;
     }
   }
-})({"iTn5z":[function(require,module,exports) {
+})({"l57Rj":[function(require,module,exports) {
 var global = arguments[3];
 var HMR_HOST = null;
 var HMR_PORT = null;
 var HMR_SECURE = false;
 var HMR_ENV_HASH = "d6ea1d42532a7575";
-module.bundle.HMR_BUNDLE_ID = "8ea416c2c6ae00b6";
+module.bundle.HMR_BUNDLE_ID = "8d9d0ce26b4e2a1d";
 "use strict";
 /* global HMR_HOST, HMR_PORT, HMR_ENV_HASH, HMR_SECURE, chrome, browser, globalThis, __parcel__import__, __parcel__importScripts__, ServiceWorkerGlobalScope */ /*::
 import type {
@@ -556,110 +556,81 @@ function hmrAccept(bundle, id) {
     });
 }
 
-},{}],"esyqh":[function(require,module,exports) {
-"use strict";
-var __awaiter = this && this.__awaiter || function(thisArg, _arguments, P, generator) {
-    function adopt(value) {
-        return value instanceof P ? value : new P(function(resolve) {
-            resolve(value);
-        });
+},{}],"04eo5":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+var _authorizationTs = require("./authorization.ts");
+var _uiTs = require("./UI.ts");
+var _apiTs = require("./api.ts");
+var _jsCookie = require("js-cookie");
+var _jsCookieDefault = parcelHelpers.interopDefault(_jsCookie);
+let breack = true;
+document.addEventListener("DOMContentLoaded", async ()=>{
+    await (0, _authorizationTs.isAuth)() ? (0, _authorizationTs.skipAuth)() : (0, _authorizationTs.authorization)();
+    getMessages();
+    loadHistory();
+});
+const templateMessage = document.querySelector("#tmp__message");
+const socket = new WebSocket(`wss://edu.strada.one/websockets?${(0, _jsCookieDefault.default).get("token")}`);
+let lastMessegeIndex = 0;
+(0, _uiTs.CHAT_UI).WINDOW.addEventListener("scroll", virtualize);
+function virtualize() {
+    let cordWindow = this.scrollHeight + this.scrollTop - this.clientHeight;
+    let scrollHeightLast = this.scrollHeight;
+    if (cordWindow < 40 && breack) {
+        loadHistory();
+        this.addEventListener("scroll", virtualize);
+        breack = !breack;
+        (0, _uiTs.CHAT_UI).WINDOW.scrollTop = (0, _uiTs.CHAT_UI).WINDOW.scrollTop + this.scrollHeight - scrollHeightLast;
+        setTimeout(()=>{
+            breack = !breack;
+        }, 1000);
     }
-    return new (P || (P = Promise))(function(resolve, reject) {
-        function fulfilled(value) {
-            try {
-                step(generator.next(value));
-            } catch (e) {
-                reject(e);
-            }
-        }
-        function rejected(value) {
-            try {
-                step(generator["throw"](value));
-            } catch (e) {
-                reject(e);
-            }
-        }
-        function step(result) {
-            result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
-        }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-var __importDefault = this && this.__importDefault || function(mod) {
-    return mod && mod.__esModule ? mod : {
-        "default": mod
-    };
-};
-Object.defineProperty(exports, "__esModule", {
-    value: true
+}
+async function getMessages() {
+    const response = await (0, _apiTs.apiGET)("https://edu.strada.one/api/messages/");
+    const messages = await response.json();
+    localStorage.setItem("historyMesseges", JSON.stringify(messages.messages));
+}
+function loadHistory() {
+    const messages = JSON.parse(localStorage.getItem("historyMesseges"));
+    const messagesPiece = messages.slice(lastMessegeIndex, lastMessegeIndex + 20);
+    (0, _uiTs.CHAT_UI).WINDOW.append(...messagesPiece.map((message)=>{
+        return createMessage(message);
+    }));
+    lastMessegeIndex += 20;
+}
+function createMessage(message) {
+    const template = templateMessage.content.cloneNode(true);
+    const bodyMessage = document.createElement("div");
+    const textMessage = template.querySelector("p");
+    const userName = message.user.name;
+    const isMine = isMyMessage(message.user.email) ? "my-message" : "other-message";
+    const classes = `chat__message`;
+    bodyMessage.classList.add(classes);
+    bodyMessage.classList.add(isMine);
+    textMessage.textContent = `${userName}: ${message.text}`;
+    bodyMessage.append(template);
+    return bodyMessage;
+}
+function sendMessage(textMessage) {
+    socket.send(JSON.stringify({
+        text: textMessage
+    }));
+}
+function isMyMessage(email) {
+    const myUserName = sessionStorage.getItem("myEmail");
+    return myUserName === email;
+}
+(0, _uiTs.CHAT_UI).FORM.addEventListener("submit", (event)=>{
+    event.preventDefault();
+    const textMessage = (0, _uiTs.CHAT_UI).INPUT.value;
+    (0, _uiTs.CHAT_UI).INPUT.value = "";
+    sendMessage(textMessage);
 });
-exports.saveMyName = exports.verification = void 0;
-const js_cookie_1 = __importDefault(require("9528fe26aa21f53a"));
-const UI_1 = require("4e73a78ca9046c22");
-const api_1 = require("f538ce44b9125539");
-function verification() {
-    UI_1.POPUP_UI.TITLE.textContent = "Подтверждение";
-    UI_1.VERIFICATION_UI.WINDOW.classList.add("active");
-    UI_1.VERIFICATION_UI.FORM.addEventListener("submit", (event)=>{
-        event.preventDefault();
-        saveToken(UI_1.VERIFICATION_UI.INPUT.value);
-        nextStep();
-    });
-}
-exports.verification = verification;
-function saveMyName() {
-    return __awaiter(this, void 0, void 0, function*() {
-        const response = yield (0, api_1.apiGET)("https://edu.strada.one/api/user/me");
-        const result = yield response.json();
-        sessionStorage.setItem("myEmail", result.email);
-    });
-}
-exports.saveMyName = saveMyName;
-function saveToken(token) {
-    js_cookie_1.default.set("token", token, {
-        expires: 1
-    });
-}
-function nextStep() {
-    UI_1.VERIFICATION_UI.WINDOW.classList.remove("active");
-    UI_1.CHAT_UI.CHAT.classList.add("active");
-    UI_1.POPUP_UI.POPUP.classList.remove("active");
-}
-
-},{"9528fe26aa21f53a":"c8bBu","4e73a78ca9046c22":"d3pWC","f538ce44b9125539":"8Zgej"}],"d3pWC":[function(require,module,exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.SETTINGS_UI = exports.VERIFICATION_UI = exports.AUTHORIZATION_UI = exports.POPUP_UI = exports.CHAT_UI = void 0;
-exports.CHAT_UI = {
-    CHAT: document.querySelector(".chat"),
-    FORM: document.querySelector(".chat__form"),
-    WINDOW: document.querySelector(".chat__window"),
-    INPUT: document.querySelector(".chat__input")
-};
-exports.POPUP_UI = {
-    POPUP: document.querySelector(".popup"),
-    TITLE: document.querySelector(".popup__title"),
-    CLOSE_BUTTONS: document.querySelectorAll(".popup__close")
-};
-exports.AUTHORIZATION_UI = {
-    FORM: document.querySelector(".authorization-form"),
-    INPUT: document.querySelector(".authorization-input"),
-    WINDOW: document.querySelector(".authorization")
-};
-exports.VERIFICATION_UI = {
-    FORM: document.querySelector(".verification-form"),
-    INPUT: document.querySelector(".verification-input"),
-    WINDOW: document.querySelector(".verification")
-};
-exports.SETTINGS_UI = {
-    WINDOW: document.querySelector(".settings"),
-    OPEN_BUTTON: document.querySelector(".chat__settings"),
-    NAME_FORM: document.querySelector(".name-form"),
-    NAME_INPUT: document.querySelector(".name-input")
+socket.onmessage = (event)=>{
+    (0, _uiTs.CHAT_UI).WINDOW.prepend(createMessage(JSON.parse(event.data)));
 };
 
-},{}]},["iTn5z","esyqh"], "esyqh", "parcelRequire25d8")
+},{"js-cookie":"c8bBu","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./authorization.ts":"fLW57","./UI.ts":"ayJ6R","./api.ts":"47TSd"}]},["l57Rj","04eo5"], "04eo5", "parcelRequire25d8")
 
-//# sourceMappingURL=index.c6ae00b6.js.map
+//# sourceMappingURL=index.6b4e2a1d.js.map

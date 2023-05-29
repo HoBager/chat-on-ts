@@ -142,13 +142,13 @@
       this[globalName] = mainExports;
     }
   }
-})({"97k2M":[function(require,module,exports) {
+})({"7IyfW":[function(require,module,exports) {
 var global = arguments[3];
 var HMR_HOST = null;
 var HMR_PORT = null;
 var HMR_SECURE = false;
 var HMR_ENV_HASH = "d6ea1d42532a7575";
-module.bundle.HMR_BUNDLE_ID = "d10d0702654cc0c2";
+module.bundle.HMR_BUNDLE_ID = "3af2d90f7abe4433";
 "use strict";
 /* global HMR_HOST, HMR_PORT, HMR_ENV_HASH, HMR_SECURE, chrome, browser, globalThis, __parcel__import__, __parcel__importScripts__, ServiceWorkerGlobalScope */ /*::
 import type {
@@ -556,160 +556,24 @@ function hmrAccept(bundle, id) {
     });
 }
 
-},{}],"8Zgej":[function(require,module,exports) {
-"use strict";
-var __awaiter = this && this.__awaiter || function(thisArg, _arguments, P, generator) {
-    function adopt(value) {
-        return value instanceof P ? value : new P(function(resolve) {
-            resolve(value);
-        });
-    }
-    return new (P || (P = Promise))(function(resolve, reject) {
-        function fulfilled(value) {
-            try {
-                step(generator.next(value));
-            } catch (e) {
-                reject(e);
-            }
-        }
-        function rejected(value) {
-            try {
-                step(generator["throw"](value));
-            } catch (e) {
-                reject(e);
-            }
-        }
-        function step(result) {
-            result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
-        }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-var __importDefault = this && this.__importDefault || function(mod) {
-    return mod && mod.__esModule ? mod : {
-        "default": mod
-    };
-};
-Object.defineProperty(exports, "__esModule", {
-    value: true
+},{}],"5bM65":[function(require,module,exports) {
+var _ui = require("./UI");
+var _apiTs = require("./api.ts");
+(0, _ui.SETTINGS_UI).OPEN_BUTTON.addEventListener("click", ()=>{
+    (0, _ui.POPUP_UI).TITLE.textContent = "Настройки";
+    (0, _ui.SETTINGS_UI).WINDOW.classList.add("active");
+    (0, _ui.POPUP_UI).POPUP.classList.add("active");
 });
-exports.apiOthersAuthMethods = exports.apiGET = void 0;
-const js_cookie_1 = __importDefault(require("924a2d51ed7e1e6a"));
-function apiGET(url) {
-    return __awaiter(this, void 0, void 0, function*() {
-        return yield fetch(url, {
-            method: "GET",
-            headers: {
-                "Authorization": `Bearer ${js_cookie_1.default.get("token")}`
-            }
-        });
+(0, _ui.SETTINGS_UI).NAME_FORM.addEventListener("submit", (event)=>{
+    event.preventDefault();
+    if ((0, _ui.SETTINGS_UI).NAME_INPUT.value) changeName((0, _ui.SETTINGS_UI).NAME_INPUT.value);
+});
+async function changeName(newName) {
+    (0, _apiTs.apiOthersAuthMethods)("https://edu.strada.one/api/user", "PATCH", {
+        name: newName
     });
 }
-exports.apiGET = apiGET;
-function apiOthersAuthMethods(url, anyMethod, body) {
-    return __awaiter(this, void 0, void 0, function*() {
-        yield fetch(url, {
-            method: anyMethod,
-            headers: {
-                "Content-Type": "application/json;charset=utf-8",
-                "Authorization": `Bearer ${js_cookie_1.default.get("token")}`
-            },
-            body: JSON.stringify(body)
-        });
-    });
-}
-exports.apiOthersAuthMethods = apiOthersAuthMethods;
 
-},{"924a2d51ed7e1e6a":"c8bBu"}],"c8bBu":[function(require,module,exports) {
-(function(global, factory) {
-    module.exports = factory();
-})(this, function() {
-    "use strict";
-    /* eslint-disable no-var */ function assign(target) {
-        for(var i = 1; i < arguments.length; i++){
-            var source = arguments[i];
-            for(var key in source)target[key] = source[key];
-        }
-        return target;
-    }
-    /* eslint-enable no-var */ /* eslint-disable no-var */ var defaultConverter = {
-        read: function(value) {
-            if (value[0] === '"') value = value.slice(1, -1);
-            return value.replace(/(%[\dA-F]{2})+/gi, decodeURIComponent);
-        },
-        write: function(value) {
-            return encodeURIComponent(value).replace(/%(2[346BF]|3[AC-F]|40|5[BDE]|60|7[BCD])/g, decodeURIComponent);
-        }
-    };
-    /* eslint-enable no-var */ /* eslint-disable no-var */ function init(converter, defaultAttributes) {
-        function set(key, value, attributes) {
-            if (typeof document === "undefined") return;
-            attributes = assign({}, defaultAttributes, attributes);
-            if (typeof attributes.expires === "number") attributes.expires = new Date(Date.now() + attributes.expires * 864e5);
-            if (attributes.expires) attributes.expires = attributes.expires.toUTCString();
-            key = encodeURIComponent(key).replace(/%(2[346B]|5E|60|7C)/g, decodeURIComponent).replace(/[()]/g, escape);
-            var stringifiedAttributes = "";
-            for(var attributeName in attributes){
-                if (!attributes[attributeName]) continue;
-                stringifiedAttributes += "; " + attributeName;
-                if (attributes[attributeName] === true) continue;
-                // Considers RFC 6265 section 5.2:
-                // ...
-                // 3.  If the remaining unparsed-attributes contains a %x3B (";")
-                //     character:
-                // Consume the characters of the unparsed-attributes up to,
-                // not including, the first %x3B (";") character.
-                // ...
-                stringifiedAttributes += "=" + attributes[attributeName].split(";")[0];
-            }
-            return document.cookie = key + "=" + converter.write(value, key) + stringifiedAttributes;
-        }
-        function get(key) {
-            if (typeof document === "undefined" || arguments.length && !key) return;
-            // To prevent the for loop in the first place assign an empty array
-            // in case there are no cookies at all.
-            var cookies = document.cookie ? document.cookie.split("; ") : [];
-            var jar = {};
-            for(var i = 0; i < cookies.length; i++){
-                var parts = cookies[i].split("=");
-                var value = parts.slice(1).join("=");
-                try {
-                    var foundKey = decodeURIComponent(parts[0]);
-                    jar[foundKey] = converter.read(value, foundKey);
-                    if (key === foundKey) break;
-                } catch (e) {}
-            }
-            return key ? jar[key] : jar;
-        }
-        return Object.create({
-            set: set,
-            get: get,
-            remove: function(key, attributes) {
-                set(key, "", assign({}, attributes, {
-                    expires: -1
-                }));
-            },
-            withAttributes: function(attributes) {
-                return init(this.converter, assign({}, this.attributes, attributes));
-            },
-            withConverter: function(converter) {
-                return init(assign({}, this.converter, converter), this.attributes);
-            }
-        }, {
-            attributes: {
-                value: Object.freeze(defaultAttributes)
-            },
-            converter: {
-                value: Object.freeze(converter)
-            }
-        });
-    }
-    var api = init(defaultConverter, {
-        path: "/"
-    });
-    /* eslint-enable no-var */ return api;
-});
+},{"./UI":"ayJ6R","./api.ts":"47TSd"}]},["7IyfW","5bM65"], "5bM65", "parcelRequire25d8")
 
-},{}]},["97k2M","8Zgej"], "8Zgej", "parcelRequire25d8")
-
-//# sourceMappingURL=index.654cc0c2.js.map
+//# sourceMappingURL=index.7abe4433.js.map

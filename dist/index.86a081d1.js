@@ -142,13 +142,13 @@
       this[globalName] = mainExports;
     }
   }
-})({"l0K21":[function(require,module,exports) {
+})({"dQ3pU":[function(require,module,exports) {
 var global = arguments[3];
 var HMR_HOST = null;
 var HMR_PORT = null;
 var HMR_SECURE = false;
 var HMR_ENV_HASH = "d6ea1d42532a7575";
-module.bundle.HMR_BUNDLE_ID = "021a2c689c37e01b";
+module.bundle.HMR_BUNDLE_ID = "d555e73486a081d1";
 "use strict";
 /* global HMR_HOST, HMR_PORT, HMR_ENV_HASH, HMR_SECURE, chrome, browser, globalThis, __parcel__import__, __parcel__importScripts__, ServiceWorkerGlobalScope */ /*::
 import type {
@@ -556,57 +556,152 @@ function hmrAccept(bundle, id) {
     });
 }
 
-},{}],"4remP":[function(require,module,exports) {
-"use strict";
-var __awaiter = this && this.__awaiter || function(thisArg, _arguments, P, generator) {
-    function adopt(value) {
-        return value instanceof P ? value : new P(function(resolve) {
-            resolve(value);
-        });
-    }
-    return new (P || (P = Promise))(function(resolve, reject) {
-        function fulfilled(value) {
-            try {
-                step(generator.next(value));
-            } catch (e) {
-                reject(e);
-            }
+},{}],"47TSd":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "apiGET", ()=>apiGET);
+parcelHelpers.export(exports, "apiOthersAuthMethods", ()=>apiOthersAuthMethods);
+var _jsCookie = require("js-cookie");
+var _jsCookieDefault = parcelHelpers.interopDefault(_jsCookie);
+async function apiGET(url) {
+    return await fetch(url, {
+        method: "GET",
+        headers: {
+            "Authorization": `Bearer ${(0, _jsCookieDefault.default).get("token")}`
         }
-        function rejected(value) {
-            try {
-                step(generator["throw"](value));
-            } catch (e) {
-                reject(e);
-            }
-        }
-        function step(result) {
-            result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
-        }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
-};
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-const UI_1 = require("561208b151ddae6b");
-const api_js_1 = require("d21f367f50d9591d");
-UI_1.SETTINGS_UI.OPEN_BUTTON.addEventListener("click", ()=>{
-    UI_1.POPUP_UI.TITLE.textContent = "Настройки";
-    UI_1.SETTINGS_UI.WINDOW.classList.add("active");
-    UI_1.POPUP_UI.POPUP.classList.add("active");
-});
-UI_1.SETTINGS_UI.NAME_FORM.addEventListener("submit", (event)=>{
-    event.preventDefault();
-    if (UI_1.SETTINGS_UI.NAME_INPUT.value) changeName(UI_1.SETTINGS_UI.NAME_INPUT.value);
-});
-function changeName(newName) {
-    return __awaiter(this, void 0, void 0, function*() {
-        (0, api_js_1.apiOthersAuthMethods)("https://edu.strada.one/api/user", "PATCH", {
-            name: newName
-        });
+}
+async function apiOthersAuthMethods(url, anyMethod, body) {
+    await fetch(url, {
+        method: anyMethod,
+        headers: {
+            "Content-Type": "application/json;charset=utf-8",
+            "Authorization": `Bearer ${(0, _jsCookieDefault.default).get("token")}`
+        },
+        body: JSON.stringify(body)
     });
 }
 
-},{"561208b151ddae6b":"d3pWC","d21f367f50d9591d":"8Zgej"}]},["l0K21","4remP"], "4remP", "parcelRequire25d8")
+},{"js-cookie":"c8bBu","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"c8bBu":[function(require,module,exports) {
+(function(global, factory) {
+    module.exports = factory();
+})(this, function() {
+    "use strict";
+    /* eslint-disable no-var */ function assign(target) {
+        for(var i = 1; i < arguments.length; i++){
+            var source = arguments[i];
+            for(var key in source)target[key] = source[key];
+        }
+        return target;
+    }
+    /* eslint-enable no-var */ /* eslint-disable no-var */ var defaultConverter = {
+        read: function(value) {
+            if (value[0] === '"') value = value.slice(1, -1);
+            return value.replace(/(%[\dA-F]{2})+/gi, decodeURIComponent);
+        },
+        write: function(value) {
+            return encodeURIComponent(value).replace(/%(2[346BF]|3[AC-F]|40|5[BDE]|60|7[BCD])/g, decodeURIComponent);
+        }
+    };
+    /* eslint-enable no-var */ /* eslint-disable no-var */ function init(converter, defaultAttributes) {
+        function set(key, value, attributes) {
+            if (typeof document === "undefined") return;
+            attributes = assign({}, defaultAttributes, attributes);
+            if (typeof attributes.expires === "number") attributes.expires = new Date(Date.now() + attributes.expires * 864e5);
+            if (attributes.expires) attributes.expires = attributes.expires.toUTCString();
+            key = encodeURIComponent(key).replace(/%(2[346B]|5E|60|7C)/g, decodeURIComponent).replace(/[()]/g, escape);
+            var stringifiedAttributes = "";
+            for(var attributeName in attributes){
+                if (!attributes[attributeName]) continue;
+                stringifiedAttributes += "; " + attributeName;
+                if (attributes[attributeName] === true) continue;
+                // Considers RFC 6265 section 5.2:
+                // ...
+                // 3.  If the remaining unparsed-attributes contains a %x3B (";")
+                //     character:
+                // Consume the characters of the unparsed-attributes up to,
+                // not including, the first %x3B (";") character.
+                // ...
+                stringifiedAttributes += "=" + attributes[attributeName].split(";")[0];
+            }
+            return document.cookie = key + "=" + converter.write(value, key) + stringifiedAttributes;
+        }
+        function get(key) {
+            if (typeof document === "undefined" || arguments.length && !key) return;
+            // To prevent the for loop in the first place assign an empty array
+            // in case there are no cookies at all.
+            var cookies = document.cookie ? document.cookie.split("; ") : [];
+            var jar = {};
+            for(var i = 0; i < cookies.length; i++){
+                var parts = cookies[i].split("=");
+                var value = parts.slice(1).join("=");
+                try {
+                    var foundKey = decodeURIComponent(parts[0]);
+                    jar[foundKey] = converter.read(value, foundKey);
+                    if (key === foundKey) break;
+                } catch (e) {}
+            }
+            return key ? jar[key] : jar;
+        }
+        return Object.create({
+            set: set,
+            get: get,
+            remove: function(key, attributes) {
+                set(key, "", assign({}, attributes, {
+                    expires: -1
+                }));
+            },
+            withAttributes: function(attributes) {
+                return init(this.converter, assign({}, this.attributes, attributes));
+            },
+            withConverter: function(converter) {
+                return init(assign({}, this.converter, converter), this.attributes);
+            }
+        }, {
+            attributes: {
+                value: Object.freeze(defaultAttributes)
+            },
+            converter: {
+                value: Object.freeze(converter)
+            }
+        });
+    }
+    var api = init(defaultConverter, {
+        path: "/"
+    });
+    /* eslint-enable no-var */ return api;
+});
 
-//# sourceMappingURL=index.9c37e01b.js.map
+},{}],"gkKU3":[function(require,module,exports) {
+exports.interopDefault = function(a) {
+    return a && a.__esModule ? a : {
+        default: a
+    };
+};
+exports.defineInteropFlag = function(a) {
+    Object.defineProperty(a, "__esModule", {
+        value: true
+    });
+};
+exports.exportAll = function(source, dest) {
+    Object.keys(source).forEach(function(key) {
+        if (key === "default" || key === "__esModule" || dest.hasOwnProperty(key)) return;
+        Object.defineProperty(dest, key, {
+            enumerable: true,
+            get: function() {
+                return source[key];
+            }
+        });
+    });
+    return dest;
+};
+exports.export = function(dest, destName, get) {
+    Object.defineProperty(dest, destName, {
+        enumerable: true,
+        get: get
+    });
+};
+
+},{}]},["dQ3pU","47TSd"], "47TSd", "parcelRequire25d8")
+
+//# sourceMappingURL=index.86a081d1.js.map
