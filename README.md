@@ -13,9 +13,9 @@
 
 ## Videos and Screenshots
 
-![image of chat](/forReadme/page1.png)
-![image of chat](/forReadme/page.png)
-![image of chat](/forReadme/page3.png)
+![image of chat](/forReadme/page1.PNG)
+![image of chat](/forReadme/page.PNG)
+![image of chat](/forReadme/page3.PNG)
 ![preview of chat](/forReadme/preview.gif)
 
 ## Authors
