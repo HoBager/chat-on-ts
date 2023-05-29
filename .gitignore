@@ -10,8 +10,6 @@ lerna-debug.log*
 src
 node_modules
 .parcel-cache
-dist
-dist-ssr
 *.local
 
 # Editor directories and files

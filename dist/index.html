@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/index.3a01df49.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="chat">
+            <div class="chat__interface">
+                <div class="chat__nav">
+                    <a href="#popup" class="chat__settings light-button">Настройки</a>
+                    <button class="chat__exit light-button">Выйти</button>
+                </div>
+                <div class="chat__window">
+
+                </div>
+                <div class="chat__messages">
+                    <form class="chat__form">
+                        <input type="text" class="chat__input" placeholder="сообщение..">
+                        <input type="submit" class="chat__send light-button" value="->">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="popup" class="popup active">
+        <a href="#" class="popup__area popup__close"></a>
+        <div class="popup__body">
+            <div class="popup__content">
+                <div class="popup__nav">
+                    <div class="popup__title">Авторизация</div>
+                    <a href="#" class="popup__close">+</a>
+                </div>
+                <div class="popup__colum">
+                    <div class="authorization active">
+                        <div class="subttitle">Почта:</div>
+                        <form class="popup__form authorization-form">
+                            <input class="popup__input authorization-input" type="text">
+                            <button class="send-mail light-button">Получить код</button>
+                        </form>
+                    </div>
+                    <div class="verification">
+                        <div class="subttitle">Код:</div>
+                        <form class="popup__form verification-form">
+                            <input class="popup__input verification-input" type="text">
+                            <button class="send-code light-button">Войти</button>
+                        </form>
+                    </div>
+                    <div class="settings">
+                        <div class="subttitle">Имя в чате:</div>
+                        <form class="popup__form name-form">
+                            <input class="popup__input name-input" type="text" placeholder="Your name">
+                            <button class="send-name light-button">-></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <template id="tmp__message">
+            <p class="text"></p>
+            <div class="message__time">
+                18:45
+            </div>
+    </template>
+    <script src="/index.654cc0c2.js" defer=""></script>
+    <script src="/index.c6ae00b6.js" defer=""></script>
+    <script src="/index.9648bcd2.js" defer=""></script>
+    <script src="/index.43125882.js" defer=""></script>
+    <script src="/index.9c37e01b.js" defer=""></script>
+    <script src="/index.975ef6c8.js" defer=""></script>
+</body>
+</html>
