@@ -14,7 +14,7 @@
 ## Videos and Screenshots
 
 ![image of chat](/forReadme/page1.PNG)
-![image of chat](/forReadme/page.PNG)
+![image of chat](/forReadme/page2.PNG)
 ![image of chat](/forReadme/page3.PNG)
 ![preview of chat](/forReadme/preview.gif)
 
